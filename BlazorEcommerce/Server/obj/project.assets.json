@@ -5108,11 +5108,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Server\\BlazorEcommerce.Server.csproj",
+      "projectUniqueName": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Server\\BlazorEcommerce.Server.csproj",
       "projectName": "BlazorEcommerce.Server",
-      "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Server\\BlazorEcommerce.Server.csproj",
+      "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Server\\BlazorEcommerce.Server.csproj",
       "packagesPath": "C:\\Users\\sjosa\\.nuget\\packages\\",
-      "outputPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Server\\obj\\",
+      "outputPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\sjosa\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5130,11 +5130,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Client\\BlazorEcommerce.Client.csproj": {
-              "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Client\\BlazorEcommerce.Client.csproj"
+            "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Client\\BlazorEcommerce.Client.csproj": {
+              "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Client\\BlazorEcommerce.Client.csproj"
             },
-            "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj": {
-              "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj"
+            "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj": {
+              "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj"
             }
           }
         }

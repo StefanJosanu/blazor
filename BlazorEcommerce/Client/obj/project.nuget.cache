@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5FvhPwkbznI=",
+  "dgSpecHash": "hEXzy/kO9UI=",
   "success": true,
-  "projectFilePath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Client\\BlazorEcommerce.Client.csproj",
+  "projectFilePath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Client\\BlazorEcommerce.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sjosa\\.nuget\\packages\\blazored.localstorage\\4.1.5\\blazored.localstorage.4.1.5.nupkg.sha512",
     "C:\\Users\\sjosa\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.6\\microsoft.aspnetcore.authorization.8.0.6.nupkg.sha512",

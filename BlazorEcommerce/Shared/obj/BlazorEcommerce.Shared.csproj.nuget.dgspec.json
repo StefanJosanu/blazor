@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj": {}
+    "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj": {}
   },
   "projects": {
-    "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj": {
+    "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj",
+        "projectUniqueName": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj",
         "projectName": "BlazorEcommerce.Shared",
-        "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj",
+        "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj",
         "packagesPath": "C:\\Users\\sjosa\\.nuget\\packages\\",
-        "outputPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\obj\\",
+        "outputPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sjosa\\AppData\\Roaming\\NuGet\\NuGet.Config",

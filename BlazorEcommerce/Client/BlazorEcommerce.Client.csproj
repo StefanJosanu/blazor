@@ -24,6 +24,7 @@
     <Folder Include="Services\CategoryService\" />
     <Folder Include="Services\OrderService\" />
     <Folder Include="Services\ProductService\" />
+    <Folder Include="Services\ProductTypeService\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 </Project>
