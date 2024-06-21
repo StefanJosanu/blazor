@@ -8,19 +8,24 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\sjosa\\.nuget\\packages\\": {}
+    "C:\\Users\\Stefan\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj",
+      "projectUniqueName": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj",
       "projectName": "BlazorEcommerce.Shared",
-      "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj",
-      "packagesPath": "C:\\Users\\sjosa\\.nuget\\packages\\",
-      "outputPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorEcommerce\\Shared\\obj\\",
+      "projectPath": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj",
+      "packagesPath": "C:\\Users\\Stefan\\.nuget\\packages\\",
+      "outputPath": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Shared\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\sjosa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Stefan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

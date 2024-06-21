@@ -13,19 +13,19 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = browser
 build_property.RootNamespace = BlazorEcommerce.Client
 build_property.RootNamespace = BlazorEcommerce.Client
-build_property.ProjectDir = D:\eCommerce\BlazorEcommerce\BlazorECommerce\Client\
+build_property.ProjectDir = D:\blazor-learn\blazor\BlazorEcommerce\Client\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = false
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\eCommerce\BlazorEcommerce\BlazorECommerce\Client
+build_property.MSBuildProjectDirectory = D:\blazor-learn\blazor\BlazorEcommerce\Client
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/eCommerce/BlazorEcommerce/BlazorECommerce/Client/App.razor]
+[D:/blazor-learn/blazor/BlazorEcommerce/Client/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/eCommerce/BlazorEcommerce/BlazorECommerce/Client/_Imports.razor]
+[D:/blazor-learn/blazor/BlazorEcommerce/Client/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

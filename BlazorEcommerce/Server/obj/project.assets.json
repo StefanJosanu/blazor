@@ -5103,19 +5103,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\sjosa\\.nuget\\packages\\": {}
+    "C:\\Users\\Stefan\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Server\\BlazorEcommerce.Server.csproj",
+      "projectUniqueName": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Server\\BlazorEcommerce.Server.csproj",
       "projectName": "BlazorEcommerce.Server",
-      "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Server\\BlazorEcommerce.Server.csproj",
-      "packagesPath": "C:\\Users\\sjosa\\.nuget\\packages\\",
-      "outputPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Server\\obj\\",
+      "projectPath": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Server\\BlazorEcommerce.Server.csproj",
+      "packagesPath": "C:\\Users\\Stefan\\.nuget\\packages\\",
+      "outputPath": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Server\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\sjosa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Stefan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5130,11 +5135,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Client\\BlazorEcommerce.Client.csproj": {
-              "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Client\\BlazorEcommerce.Client.csproj"
+            "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Client\\BlazorEcommerce.Client.csproj": {
+              "projectPath": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Client\\BlazorEcommerce.Client.csproj"
             },
-            "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj": {
-              "projectPath": "D:\\eCommerce\\BlazorEcommerce\\BlazorECommerce\\Shared\\BlazorEcommerce.Shared.csproj"
+            "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj": {
+              "projectPath": "D:\\blazor-learn\\blazor\\BlazorEcommerce\\Shared\\BlazorEcommerce.Shared.csproj"
             }
           }
         }
