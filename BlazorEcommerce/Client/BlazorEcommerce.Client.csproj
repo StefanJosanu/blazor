@@ -5,10 +5,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Shared\MainLayout.razor" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shared\MainLayout.razor" />
     <None Include="wwwroot\Images\.DS_Store" />
   </ItemGroup>
   <ItemGroup>
@@ -20,11 +16,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\BlazorEcommerce.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Shared\MainLayout.razor" />
-  </ItemGroup>
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Shared\MainLayout.razor" />
   </ItemGroup>
 </Project>
