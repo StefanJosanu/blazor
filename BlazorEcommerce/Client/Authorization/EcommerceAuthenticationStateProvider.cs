@@ -12,7 +12,7 @@ namespace BlazorEcommerce.Client.Authorization
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-           var  identity = new ClaimsIdentity();
+            var identity = new ClaimsIdentity();
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
     }

@@ -3,17 +3,17 @@ using MediatR;
 
 namespace BlazorEcommerce.Server.Application.Locations
 {
-    public class UpdateLocationCommand : IRequest<UpdateLocationDTO>
+    public class UpdateLocationCommand : IRequest<LocationManagementDTO>
     {
         public Guid Id { get; set; }
-        public UpdateLocationDTO updateLocationDTO { get; set; }    
-        public UpdateLocationCommand(Guid id, UpdateLocationDTO UpdateLocationDTO)
+        public LocationManagementDTO updateLocationDTO { get; set; }    
+        public UpdateLocationCommand(Guid id, LocationManagementDTO UpdateLocationDTO)
         {
             Id = id;
             updateLocationDTO = UpdateLocationDTO; 
         }
     }
-    public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, UpdateLocationDTO>
+    public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, LocationManagementDTO>
     {
         private readonly AppDbContext _dbContext;
 
@@ -22,7 +22,7 @@ namespace BlazorEcommerce.Server.Application.Locations
             _dbContext = dbContext;
         }
 
-        public async Task<UpdateLocationDTO> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
+        public async Task<LocationManagementDTO> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
         {
             var dbLocation = await _dbContext.Locations.Where(l => l.Id == request.Id).FirstOrDefaultAsync();
 

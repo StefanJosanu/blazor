@@ -1,0 +1,45 @@
+﻿@page "/locations"
+@using BlazorEcommerce.Shared
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject ILocationService LocationService
+@if (locations == null)
+{
+    <span>Loading...</span>
+}
+@if (locations != null && locations.Count == 0)
+{
+    <span>Location List is empty.</span>
+}
+@if (locations != null)
+{
+
+    <h1>Location List</h1>
+        <div class="container">
+            @foreach(var location in locations)
+            {
+            <MudTable Items="@locations.Take(1)" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+                <HeaderContent>
+                    <MudTh>Name</MudTh>
+                    <MudTh>Address</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="Address">@context.Address</MudTd>
+                </RowTemplate>
+            </MudTable>
+            }
+            <br />
+    </div>
+
+}
+
+
+@code {
+    private List<GetLocationDTO> locations { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        locations = await LocationService.GetLocations();
+    }
+}

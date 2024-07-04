@@ -1,0 +1,9 @@
+﻿body {
+}
+.container {
+    width: 90vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

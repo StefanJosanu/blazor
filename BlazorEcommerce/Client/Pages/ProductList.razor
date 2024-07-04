@@ -12,10 +12,7 @@
     <span>Product List is empty.</span>
 }
 @if(products != null)
-{
-    @foreach (var product in products)
-    {
-        
+{ 
         <div class="container">
             <h1>Product List</h1>
             <MudTable Items="@products.Take(7)" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
@@ -29,6 +26,8 @@
                     <MudTh>Stock Location Address</MudTh>
                 </HeaderContent>
                 <RowTemplate>
+                    @foreach(var product in products)
+                    {
                     <MudTd DataLabel="Name">@context.Name</MudTd>
                     <MudTd DataLabel="Short Description">@context.ShortDescription</MudTd>
                     <MudTd DataLabel="Description">@context.Description</MudTd>
@@ -36,11 +35,12 @@
                     <MudTd DataLabel="Stock Quantity">@context.StockQuantity</MudTd>
                     <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
                     <MudTd DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
-                </RowTemplate>
+                    }
+            </RowTemplate>
             </MudTable>
         </div>
 
-    }
+
 
 }
 

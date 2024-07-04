@@ -5,8 +5,8 @@ namespace BlazorEcommerce.Server.Application.Locations
 {
     public class CreateLocationCommand : IRequest<Unit>
     {
-        public UpdateLocationDTO Location { get; set; }
-        public CreateLocationCommand(UpdateLocationDTO location)
+        public LocationManagementDTO Location { get; set; }
+        public CreateLocationCommand(LocationManagementDTO location)
         {
             Location = location;
         }

@@ -7,6 +7,7 @@ using BlazorEcommerce.Client.Services.ProductService;
 using Microsoft.AspNetCore.Components.Authorization;
 using BlazorEcommerce.Client.Authorization;
 using Microsoft.AspNetCore.Authorization;
+using BlazorEcommerce.Client.Services.LocationService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -21,5 +22,7 @@ builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
+
 
 await builder.Build().RunAsync();

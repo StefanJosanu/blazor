@@ -9,33 +9,40 @@ namespace BlazorEcommerce.Server;
 public class LocationController : ControllerBase
 {
     private readonly IMediator _mediator;
+
     public LocationController(IMediator mediator)
     {
         _mediator = mediator;
     }
+
     [HttpGet("get-locations")]
-    public async Task<List<Location>> GetLocations()
+    public async Task<List<GetLocationDTO>> GetLocations()
     {
-        return await _mediator.Send(new GetLocationsQuerry());
+        return await _mediator.Send(new GetLocationsQuery());
     }
+
     [HttpGet("get-id-location")]
-    public async Task<Location> GetLocationById(Guid id)
+    public async Task<GetLocationDTO> GetLocationById(Guid id)
     {
-        return await _mediator.Send(new GetLocationByIdQuerry(id) { Id = id });
+        return await _mediator.Send(new GetLocationByIdQuery(id) { Id = id });
     }
+
     [HttpPost("create-locations")]
-    public async Task<Unit> CreateLocation([FromBody] UpdateLocationDTO locationDTO)
+    public async Task<Unit> CreateLocation([FromBody] LocationManagementDTO locationDTO)
     {
         return await _mediator.Send(new CreateLocationCommand(locationDTO));
     }
+
     [HttpPut("update-location")]
-    public async Task<UpdateLocationDTO> UpdateLocation(Guid id, [FromBody] UpdateLocationDTO updateLocation)
+    public async Task<LocationManagementDTO> UpdateLocation(Guid id, [FromBody] LocationManagementDTO updateLocation)
     {
         return await _mediator.Send(new UpdateLocationCommand(id, updateLocation) { Id = id });
     }
+
     [HttpDelete("delete-location")]
     public async Task<Unit> DeleteLocation(Guid id)
     {
         return await _mediator.Send(new DeleteLocationCommand(id) { Id = id });
     }
+
 }
