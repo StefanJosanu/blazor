@@ -5,9 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Stripe.net" Version="39.80.0" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6" />
@@ -16,14 +15,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Client\BlazorEcommerce.Client.csproj" />
     <ProjectReference Include="..\Shared\BlazorEcommerce.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Data\" />
-    <Folder Include="Services\AddressService\" />
-    <Folder Include="Services\OrderService\" />
-    <Folder Include="Services\PaymentService\" />
-    <Folder Include="Services\ProductService\" />
-    <Folder Include="Services\ProductTypeService\" />
   </ItemGroup>
 </Project>

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BlazorEcommerce.Shared
 {
-    public class Image
+    public class UpdateLocationDTO
     {
-        public int Id { get; set; }
-        public string Data { get; set; } = string.Empty;
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }
