@@ -24,7 +24,7 @@ public class ProductController : ControllerBase
         return await _mediator.Send(new GetProductByIdQuerry(id) { Id = id });
     }
     [HttpPost("create-product")]
-    public async Task<CreateProductDTO> CreateProduct([FromBody] CreateProductDTO createProductDTO)
+    public async Task<Unit> CreateProduct([FromBody] ProductDTO createProductDTO)
     {
         return await _mediator.Send(new CreateProductCommand(createProductDTO));
     }

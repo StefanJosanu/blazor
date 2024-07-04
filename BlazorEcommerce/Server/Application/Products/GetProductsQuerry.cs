@@ -19,6 +19,7 @@ public class GetProductsQuerryHandler : IRequestHandler<GetProductsQuerry, List<
     {
         return await _dbContext.Products.Include(p => p.StockLocation).Select(p => new GetProductDTO
         {
+            Id = p.Id,
             Name = p.Name,
             ShortDescription = p.ShortDescription,
             Description = p.Description,

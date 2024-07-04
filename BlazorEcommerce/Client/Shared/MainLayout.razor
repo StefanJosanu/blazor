@@ -1,5 +1,15 @@
-﻿<h3>MainLayout</h3>
+﻿@inherits LayoutComponentBase
 
-@code {
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-}
+<MudLayout>
+    <div class="top">
+        <NavMenu />
+    </div>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>

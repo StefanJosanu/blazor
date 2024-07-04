@@ -3,15 +3,17 @@ using MediatR;
 
 namespace BlazorEcommerce.Server.Application.Products
 {
-    public class CreateProductCommand : IRequest<CreateProductDTO>
+    public class CreateProductCommand : IRequest<Unit>
     {
-        public CreateProductDTO Product { get; set; }
-        public CreateProductCommand(CreateProductDTO product)
+        public ProductDTO Product { get; set; }
+
+        public CreateProductCommand(ProductDTO product)
         {
             Product = product;
         }
     }
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductDTO>
+
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Unit>
     {
         private readonly AppDbContext _dbContext;
 
@@ -20,10 +22,11 @@ namespace BlazorEcommerce.Server.Application.Products
             _dbContext = dbContext;
         }
 
-        public async Task<CreateProductDTO> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var productToAdd = new Product
             {
+                Id = request.Product.Id,
                 Name = request.Product.Name,
                 ShortDescription = request.Product.ShortDescription,
                 Description = request.Product.Description,
@@ -31,9 +34,10 @@ namespace BlazorEcommerce.Server.Application.Products
                 StockQuantity = request.Product.StockQuantity,
                 StockLocationId = request.Product.StockLocationId
             };
-            await _dbContext.AddAsync(productToAdd);
+            await _dbContext.Products.AddAsync(productToAdd);
             await _dbContext.SaveChangesAsync();
-            return request.Product;
+
+            return Unit.Value;
         }
     }
 }

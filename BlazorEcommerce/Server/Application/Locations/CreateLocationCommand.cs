@@ -1,36 +1,37 @@
 ﻿using BlazorEcommerce.Shared;
 using MediatR;
 
-namespace BlazorEcommerce.Server;
-
-public class CreateLocationCommand : IRequest<UpdateLocationDTO>
+namespace BlazorEcommerce.Server.Application.Locations
 {
-    public UpdateLocationDTO locationDTO { get; set; }
-    public CreateLocationCommand(UpdateLocationDTO LocationDTO)
+    public class CreateLocationCommand : IRequest<Unit>
     {
-        locationDTO = LocationDTO;
-    }
-}
-
-public class CreateLocationCommandHandler : IRequestHandler<CreateLocationCommand, UpdateLocationDTO>
-{
-    private readonly AppDbContext _dbContext;
-    public CreateLocationCommandHandler(AppDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
-    public async Task<UpdateLocationDTO> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
-    {
-        var locationToAdd = new Location
+        public UpdateLocationDTO Location { get; set; }
+        public CreateLocationCommand(UpdateLocationDTO location)
         {
-            Name = request.locationDTO.Name,
-            Address = request.locationDTO.Address
-        };
+            Location = location;
+        }
+    }
 
-        await _dbContext.Locations.AddAsync(locationToAdd);
-        await _dbContext.SaveChangesAsync();
+    public class CreateLocationCommandHandler : IRequestHandler<CreateLocationCommand, Unit>
+    {
+        private readonly AppDbContext _dbContext;
 
-        return request.locationDTO;
+        public CreateLocationCommandHandler(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public async Task<Unit> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
+        {
+            var locationToAdd = new Location
+            {
+                Name = request.Location.Name,
+                Address = request.Location.Address
+            };
+            await _dbContext.Locations.AddAsync(locationToAdd);
+            await _dbContext.SaveChangesAsync();
+
+            return Unit.Value;
+        }
     }
 }

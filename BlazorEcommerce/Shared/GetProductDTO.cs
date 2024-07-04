@@ -16,7 +16,6 @@ namespace BlazorEcommerce.Shared
         [Column(TypeName = "decimal(18, 6)")]
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
-        public Guid StockLocationId { get; set; }
         public string StockLocationName { get; set; }
         public string StockLocationAddress { get; set; }
     }

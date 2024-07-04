@@ -24,7 +24,7 @@ public class LocationController : ControllerBase
         return await _mediator.Send(new GetLocationByIdQuerry(id) { Id = id });
     }
     [HttpPost("create-locations")]
-    public async Task<UpdateLocationDTO> CreateLocation([FromBody] UpdateLocationDTO locationDTO)
+    public async Task<Unit> CreateLocation([FromBody] UpdateLocationDTO locationDTO)
     {
         return await _mediator.Send(new CreateLocationCommand(locationDTO));
     }

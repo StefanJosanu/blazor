@@ -1,0 +1,46 @@
+﻿@using BlazorEcommerce.Shared
+@using System.Net.Http.Json
+@using MudBlazor.Examples.Data.Models
+@inject IProductService ProductService
+@if(products == null)
+{
+    <span>Loading...</span>
+}
+@if(products.Count == 0)
+{
+    <span>Product List is empty.</span>
+}
+@if(products != null)
+{
+    @foreach (var product in products)
+    {
+    <MudTable Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>Nr</MudTh>
+        <MudTh>Sign</MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>Position</MudTh>
+        <MudTh>Molar mass</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Number</MudTd>
+        <MudTd DataLabel="Sign">@context.Sign</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Position" HideSmall="_hidePosition">@context.Position</MudTd>
+        <MudTd DataLabel="Molar mass">@context.Molar</MudTd>
+    </RowTemplate>
+    </MudTable>
+
+    }
+}
+
+
+
+@code {
+    private List<GetProductDTO> products { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetAllProducts();
+    }
+}
