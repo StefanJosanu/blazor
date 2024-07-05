@@ -13,27 +13,20 @@
 }
 @if (locations != null)
 {
-
-    <h1>Location List</h1>
-        <div class="container">
-            @foreach(var location in locations)
-            {
-            <MudTable Items="@locations.Take(1)" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
-                <HeaderContent>
-                    <MudTh>Name</MudTh>
-                    <MudTh>Address</MudTh>
-                </HeaderContent>
-                <RowTemplate>
-                    <MudTd DataLabel="Name">@context.Name</MudTd>
-                    <MudTd DataLabel="Address">@context.Address</MudTd>
-                </RowTemplate>
-            </MudTable>
-            }
-            <br />
+    <div class="container">
+        <h1>Location List</h1>
+        <MudTable Items="@locations" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+            <HeaderContent>
+                <MudTh>Name</MudTh>
+                <MudTh>Address</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Address">@context.Address</MudTd>
+            </RowTemplate>
+        </MudTable>
     </div>
-
 }
-
 
 @code {
     private List<GetLocationDTO> locations { get; set; }

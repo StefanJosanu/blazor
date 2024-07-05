@@ -13,7 +13,6 @@ namespace BlazorEcommerce.Server.Application.Locations
         }
     }
 
-
     public class GetLocationByIdQuerryHandler : IRequestHandler<GetLocationByIdQuery, GetLocationDTO>
     {
         private readonly AppDbContext _dbContext;
@@ -37,6 +36,4 @@ namespace BlazorEcommerce.Server.Application.Locations
             return request.Location;
         }
     }
-
-
 }

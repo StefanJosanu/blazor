@@ -26,6 +26,5 @@ namespace BlazorEcommerce.Server.Application.Locations
                 Address = l.Address
             }).ToListAsync();
         }
-
     }
 }

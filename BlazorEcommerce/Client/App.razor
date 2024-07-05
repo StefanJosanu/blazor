@@ -1,6 +1,6 @@
 ﻿@using BlazorEcommerce.Client.Shared
 @using Microsoft.AspNetCore.Components.Authorization
-﻿<CascadingAuthenticationState>
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">

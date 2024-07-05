@@ -1,5 +1,4 @@
 ﻿@page "/products"
-@using BlazorEcommerce.Shared
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IProductService ProductService
@@ -15,35 +14,28 @@
 { 
         <div class="container">
             <h1>Product List</h1>
-            <MudTable Items="@products.Take(7)" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
-                <HeaderContent>
-                    <MudTh>Name</MudTh>
-                    <MudTh>Short Description</MudTh>
-                    <MudTh>Description</MudTh>
-                    <MudTh>Price</MudTh>
-                    <MudTh>Stock Quantity</MudTh>
-                    <MudTh>Stock Location Name</MudTh>
-                    <MudTh>Stock Location Address</MudTh>
-                </HeaderContent>
-                <RowTemplate>
-                    @foreach(var product in products)
-                    {
-                    <MudTd DataLabel="Name">@context.Name</MudTd>
-                    <MudTd DataLabel="Short Description">@context.ShortDescription</MudTd>
-                    <MudTd DataLabel="Description">@context.Description</MudTd>
-                    <MudTd DataLabel="Price">$@context.Price</MudTd>
-                    <MudTd DataLabel="Stock Quantity">@context.StockQuantity</MudTd>
-                    <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
-                    <MudTd DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
-                    }
-            </RowTemplate>
+            <MudTable Items="@products" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+                    <HeaderContent>
+                        <MudTh>Name</MudTh>
+                        <MudTh>Short Description</MudTh>
+                        <MudTh>Description</MudTh>
+                        <MudTh>Price</MudTh>
+                        <MudTh>Stock Quantity</MudTh>
+                        <MudTh>Stock Location Name</MudTh>
+                        <MudTh>Stock Location Address</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Name">@context.Name</MudTd>
+                        <MudTd DataLabel="Short Description">@context.ShortDescription</MudTd>
+                        <MudTd DataLabel="Description">@context.Description</MudTd>
+                        <MudTd DataLabel="Price">@context.Price</MudTd>
+                        <MudTd DataLabel="Stock Quantity">@context.StockQuantity</MudTd>
+                        <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
+                        <MudTd DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
+                    </RowTemplate>
             </MudTable>
         </div>
-
-
-
 }
-
 
 @code {
     private List<GetProductDTO> products { get; set; }
