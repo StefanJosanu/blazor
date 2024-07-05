@@ -1,0 +1,47 @@
+﻿@page "/products"
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IProductService ProductService
+@if(products == null)
+{
+    <span>Loading...</span>
+}
+@if ( products != null && products.Count == 0)
+{
+    <span>Product List is empty.</span>
+}
+@if(products != null)
+{ 
+        <div class="container">
+            <h1>Product List</h1>
+            <MudTable Items="@products" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+                    <HeaderContent>
+                        <MudTh>Name</MudTh>
+                        <MudTh>Short Description</MudTh>
+                        <MudTh>Description</MudTh>
+                        <MudTh>Price</MudTh>
+                        <MudTh>Stock Quantity</MudTh>
+                        <MudTh>Stock Location Name</MudTh>
+                        <MudTh>Stock Location Address</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Name">@context.Name</MudTd>
+                        <MudTd DataLabel="Short Description">@context.ShortDescription</MudTd>
+                        <MudTd DataLabel="Description">@context.Description</MudTd>
+                        <MudTd DataLabel="Price">@context.Price</MudTd>
+                        <MudTd DataLabel="Stock Quantity">@context.StockQuantity</MudTd>
+                        <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
+                        <MudTd DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
+                    </RowTemplate>
+            </MudTable>
+        </div>
+}
+
+@code {
+    private List<GetProductDTO> products { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetAllProducts();
+    }
+}

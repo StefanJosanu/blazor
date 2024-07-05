@@ -17,6 +17,6 @@
     <ProjectReference Include="..\Shared\BlazorEcommerce.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Application\Products\" />
+    <Folder Include="Application\ProductsApp\" />
   </ItemGroup>
 </Project>

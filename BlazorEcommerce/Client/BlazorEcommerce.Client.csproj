@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -16,14 +16,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\BlazorEcommerce.Shared.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\Admin\" />
-    <Folder Include="Services\AuthService\" />
-    <Folder Include="Services\CartService\" />
-    <Folder Include="Services\CategoryService\" />
-    <Folder Include="Services\OrderService\" />
-    <Folder Include="Services\ProductService\" />
-    <Folder Include="Shared\" />
   </ItemGroup>
 </Project>

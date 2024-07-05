@@ -1,10 +1,20 @@
-﻿
-    <Router AppAssembly="@typeof(App).Assembly">
+﻿@using BlazorEcommerce.Client.Shared
+@using Microsoft.AspNetCore.Components.Authorization
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
         <Found Context="routeData">
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+            <Authorizing>
+                <text>Se autentifică</text>
+            </Authorizing>
+            <NotAuthorized>
+                <text>Nu sunteți autentificat/autorizat </text>
+            </NotAuthorized>
+            </AuthorizeRouteView>
         </Found>
         <NotFound>
-            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+            </LayoutView>
         </NotFound>
     </Router>
-
+</CascadingAuthenticationState>

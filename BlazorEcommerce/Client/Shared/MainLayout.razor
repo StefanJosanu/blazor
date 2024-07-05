@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+
+<MudLayout>
+    <MudNavMenu>
+        <MudNavLink Href="/products" Match="NavLinkMatch.All">Products</MudNavLink>
+        <MudNavLink Href="/locations" Match="NavLinkMatch.All">Locations</MudNavLink>
+    </MudNavMenu>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
