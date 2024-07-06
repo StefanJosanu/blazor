@@ -14,10 +14,12 @@ public class RemoveProductCommand : IRequest<Unit>
 public class RemoveProductCommandHandler : IRequestHandler<RemoveProductCommand, Unit>
 {
     private readonly AppDbContext _dbContext;
+
     public RemoveProductCommandHandler(AppDbContext dbContext)
     {
         _dbContext = dbContext;
     }
+
     public async Task<Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
     {
         var productToDelete = await _dbContext.Products.Where(p => p.Id == request.Id).FirstOrDefaultAsync();

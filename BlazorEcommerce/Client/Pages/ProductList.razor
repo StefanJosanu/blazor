@@ -2,14 +2,7 @@
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IProductService ProductService
-@if(products == null)
-{
-    <span>Loading...</span>
-}
-@if ( products != null && products.Count == 0)
-{
-    <span>Product List is empty.</span>
-}
+
 @if(products != null)
 { 
         <div class="container">
@@ -35,6 +28,20 @@
                     </RowTemplate>
             </MudTable>
         </div>
+}
+
+@if (products == null)
+{
+    <div class="container">
+        <span>Loading...</span>
+    </div>
+}
+
+@if (products != null && products.Count == 0)
+{
+    <div class="container">
+        <span>Product List is empty.</span>
+    </div>
 }
 
 @code {

@@ -3,14 +3,7 @@
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject ILocationService LocationService
-@if (locations == null)
-{
-    <span>Loading...</span>
-}
-@if (locations != null && locations.Count == 0)
-{
-    <span>Location List is empty.</span>
-}
+
 @if (locations != null)
 {
     <div class="container">
@@ -25,6 +18,20 @@
                 <MudTd DataLabel="Address">@context.Address</MudTd>
             </RowTemplate>
         </MudTable>
+    </div>
+}
+
+@if (locations == null)
+{
+    <div class="container">
+         <span>Location List is empty.</span>
+    </div>
+}
+
+@if (locations != null && locations.Count == 0)
+{
+    <div class="container">
+        <span>Location List is empty.</span>
     </div>
 }
 
