@@ -13,6 +13,7 @@ namespace BlazorEcommerce.Server.Application.Locations
             updateLocationDTO = UpdateLocationDTO; 
         }
     }
+
     public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, LocationManagementDTO>
     {
         private readonly AppDbContext _dbContext;

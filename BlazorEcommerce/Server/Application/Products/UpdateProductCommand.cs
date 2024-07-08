@@ -3,19 +3,19 @@ using MediatR;
 
 namespace BlazorEcommerce.Server;
 
-public class UpdateProductCommand : IRequest<CreateProductDTO>
+public class UpdateProductCommand : IRequest<ProductDTO>
 {
     public Guid Id { get; set; }
-    public CreateProductDTO productDTO { get; set; }
+    public ProductDTO productDTO { get; set; }
 
-    public UpdateProductCommand(Guid id, CreateProductDTO ProductDTO)
+    public UpdateProductCommand(Guid id, ProductDTO ProductDTO)
     {
         Id = id;
         productDTO = ProductDTO;
     }
 }
 
-public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, CreateProductDTO>
+public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ProductDTO>
 {
     private readonly AppDbContext _dbContext;
 
@@ -24,7 +24,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         _dbContext = dbContext;
     }
 
-    public async Task<CreateProductDTO> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<ProductDTO> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var dbProduct = await _dbContext.Products.Where(p => p.Id == request.Id).FirstOrDefaultAsync();
 

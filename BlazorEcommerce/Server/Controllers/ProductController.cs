@@ -28,13 +28,13 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost("create-product")]
-    public async Task<Unit> CreateProduct([FromBody] ProductDTO createProductDTO)
+    public async Task<CreateProductDTO> CreateProduct([FromBody] CreateProductDTO createProductDTO)
     {
         return await _mediator.Send(new CreateProductCommand(createProductDTO));
     }
 
     [HttpPut("update-product")]
-    public async Task<CreateProductDTO> UpdateProduct (Guid id, [FromBody] CreateProductDTO productDTO)
+    public async Task<ProductDTO> UpdateProduct (Guid id, [FromBody] ProductDTO productDTO)
     {
         return await _mediator.Send(new UpdateProductCommand(id, productDTO) { Id = id });
     }
@@ -44,5 +44,4 @@ public class ProductController : ControllerBase
     {
         return await _mediator.Send( new RemoveProductCommand(id) { Id = id} );
     }
-
 }

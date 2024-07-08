@@ -10,6 +10,7 @@ public class GetProductsQuerry : IRequest<List<GetProductDTO>>
 public class GetProductsQuerryHandler : IRequestHandler<GetProductsQuerry, List<GetProductDTO>>
 {
     private readonly AppDbContext _dbContext;
+
     public GetProductsQuerryHandler (AppDbContext dbContext)
     {
         _dbContext = dbContext;
@@ -28,6 +29,5 @@ public class GetProductsQuerryHandler : IRequestHandler<GetProductsQuerry, List<
             StockLocationName = p.StockLocation.Name,
             StockLocationAddress = p.StockLocation.Address
         }).ToListAsync();
-
     }
 }

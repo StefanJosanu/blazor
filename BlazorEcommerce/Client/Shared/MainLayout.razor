@@ -1,10 +1,13 @@
 ﻿@inherits LayoutComponentBase
 
 <MudLayout>
-    <MudNavMenu>
-        <MudNavLink Href="/products" Match="NavLinkMatch.All">Products</MudNavLink>
-        <MudNavLink Href="/locations" Match="NavLinkMatch.All">Locations</MudNavLink>
-    </MudNavMenu>
+    <MudAppBar Color="@Color.Primary">
+        <MudMenu Icon="@Icons.Material.Filled.Menu" Color="@Color.Inherit">
+            <MudMenuItem Href="/products">Products</MudMenuItem>
+            <MudMenuItem Href="/locations">Locations</MudMenuItem>
+        </MudMenu>
+        BlazorEcommerce App
+    </MudAppBar>
     <MudMainContent>
         @Body
     </MudMainContent>

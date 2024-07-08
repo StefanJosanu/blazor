@@ -6,6 +6,7 @@ namespace BlazorEcommerce.Client.Services.ProductService
     public class ProductService : IProductService
     {
         private readonly HttpClient _http;
+
         public ProductService(HttpClient http)
         {
             _http = http;
@@ -16,7 +17,5 @@ namespace BlazorEcommerce.Client.Services.ProductService
         {
             return await _http.GetFromJsonAsync<List<GetProductDTO>>("api/product/get-products");
         }
-
-      
     }
 }
