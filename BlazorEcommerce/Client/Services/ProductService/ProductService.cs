@@ -12,6 +12,10 @@ namespace BlazorEcommerce.Client.Services.ProductService
             _http = http;
         }
 
+        public async void CreateProduct(CreateProductDTO product)
+        {
+            await _http.PostAsJsonAsync("api/product/create-product", product);
+        }
 
         public async Task<List<GetProductDTO>> GetAllProducts()
         {

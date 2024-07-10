@@ -5,5 +5,6 @@ namespace BlazorEcommerce.Client.Services.LocationService
     public interface ILocationService
     {
         Task<List<GetLocationDTO>> GetLocations();
+        void CreateLocation(LocationManagementDTO locationToAdd);
     }
 }

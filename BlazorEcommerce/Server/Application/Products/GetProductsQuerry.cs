@@ -28,6 +28,8 @@ public class GetProductsQuerryHandler : IRequestHandler<GetProductsQuerry, List<
             StockQuantity = p.StockQuantity,
             StockLocationName = p.StockLocation.Name,
             StockLocationAddress = p.StockLocation.Address
-        }).ToListAsync();
+        })
+        .OrderBy(p => p.Name)
+        .ToListAsync();
     }
 }
