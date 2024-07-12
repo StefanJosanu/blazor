@@ -63,7 +63,7 @@
 }
 
 @code {
-    private List<GetLocationDTO> locations { get; set; }
+    private List<LocationDTO> locations { get; set; }
     public LocationManagementDTO location = new LocationManagementDTO();
     private bool _open = false;
 
@@ -71,6 +71,7 @@
     {
         locations = await locationService.GetLocations();
     }
+
     public void CreateLocation()
     {
         locationService.CreateLocation(location);

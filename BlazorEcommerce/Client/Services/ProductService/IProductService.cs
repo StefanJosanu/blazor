@@ -5,6 +5,6 @@ namespace BlazorEcommerce.Client.Services.ProductService
     public interface IProductService
     {
         Task<List<GetProductDTO>> GetAllProducts();
-        void CreateProduct(CreateProductDTO product);
+        Task CreateProduct(CreateProductDTO product);
     }
 }

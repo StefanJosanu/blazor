@@ -13,14 +13,14 @@ namespace BlazorEcommerce.Client.Services.LocationService
             _http = http;
         }
 
-        public async void CreateLocation(LocationManagementDTO locationToAdd)
+        public async Task CreateLocation(LocationManagementDTO locationToAdd)
         {
             await _http.PostAsJsonAsync("api/location/create-locations", locationToAdd);
         }
 
-        public async Task<List<GetLocationDTO>> GetLocations()
+        public async Task<List<LocationDTO>> GetLocations()
         {
-            return await _http.GetFromJsonAsync<List<GetLocationDTO>>("api/location/get-locations");
+            return await _http.GetFromJsonAsync<List<LocationDTO>>("api/location/get-locations");
         }
     }
 }

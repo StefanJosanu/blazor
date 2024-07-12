@@ -2,6 +2,7 @@
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IProductService ProductService
+@inject ILocationService LocationService
 @inject NavigationManager navigation
 
 <div class="container">
@@ -28,6 +29,16 @@
                     <label for="StockQuantity">Stock Quantity</label>
                     <InputNumber id="StockQuantity" @bind-Value="@product.StockQuantity" class="form-control"></InputNumber>
                 </div>
+                <div class="form-group">
+                    <MudSelect T="Guid?" @bind-Value="@product.StockLocationId" Label="Select Location" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                        @foreach(var location in getLocations)
+                        {
+                            <MudSelectItem Value="@location.Id">@location.Name</MudSelectItem>
+                        }
+                    </MudSelect>    
+                </div>
+                <br/>
+                <br/>
                 <div class="form-group">
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateProduct">Create</MudButton>
                     <MudButton OnClick="@ToggleOpen" class="ml-2" Color="Color.Error">Close</MudButton>
@@ -83,17 +94,23 @@
 
 @code {
     private List<GetProductDTO> products { get; set; }
+    private List<LocationDTO> getLocations { get; set; }
+
     public CreateProductDTO product = new CreateProductDTO();
     private bool _open = false;
+
     protected override async Task OnInitializedAsync()
     {
         products = await ProductService.GetAllProducts();
+        getLocations = await LocationService.GetLocations();
     }
-    public void CreateProduct()
+
+    public async Task CreateProduct()
     {
-        ProductService.CreateProduct(product);
+        Console.WriteLine($"Stock Location Id: {product.StockLocationId}");
+        await ProductService.CreateProduct(product);
         _open = false;
         navigation.NavigateTo(navigation.Uri, true);
     }
-    private void ToggleOpen() => _open = !_open;
+    private async Task ToggleOpen() => _open = !_open;
 }
