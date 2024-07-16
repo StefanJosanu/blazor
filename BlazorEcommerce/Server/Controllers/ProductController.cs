@@ -28,7 +28,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost("create-product")]
-    public async Task<CreateProductDTO> CreateProduct([FromBody] CreateProductDTO createProductDTO)
+    public async Task<Unit> CreateProduct([FromBody] CreateProductDTO createProductDTO)
     {
         return await _mediator.Send(new CreateProductCommand(createProductDTO));
     }

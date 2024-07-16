@@ -24,7 +24,9 @@ namespace BlazorEcommerce.Server.Application.Locations
                 Id = l.Id,
                 Name = l.Name,
                 Address = l.Address
-            }).ToListAsync();
+            })
+            .OrderBy(l => l.Name)
+            .ToListAsync();
         }
     }
 }

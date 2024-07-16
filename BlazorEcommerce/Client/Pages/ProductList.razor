@@ -2,12 +2,60 @@
 @using System.Net.Http.Json
 @inject HttpClient httpClient
 @inject IProductService ProductService
+@inject ILocationService LocationService
+@inject NavigationManager navigation
+
+<div class="container">
+    <MudPopover Open="@_open" Fixed="true">
+        <EditForm Model="@product" class="pop_up" style="padding: 20px;">
+            <div class="d-flex flex-column align-items-center">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Name">Name</label>
+                    <InputText id="Name" @bind-Value="@product.Name" class="form-control"></InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="ShortDescription">Short Description</label>
+                    <InputText id="ShortDescription" @bind-Value="@product.ShortDescription" class="form-control"></InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Description">Short Description</label>
+                    <InputText id="Description" @bind-Value="@product.Description" class="form-control"></InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Price">Price</label>
+                    <InputNumber id="Price" @bind-Value="@product.Price" class="form-control"></InputNumber>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="StockQuantity">Stock Quantity</label>
+                    <InputNumber id="StockQuantity" @bind-Value="@product.StockQuantity" class="form-control"></InputNumber>
+                </div>
+                <div class="form-group">
+                    <MudSelect T="Guid?" @bind-Value="@product.StockLocationId" Label="Select Location" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                        @foreach(var location in getLocations)
+                        {
+                            <MudSelectItem Value="@location.Id">@location.Name</MudSelectItem>
+                        }
+                    </MudSelect>    
+                </div>
+                <br/>
+                <br/>
+                <div class="form-group">
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateProduct">Create</MudButton>
+                    <MudButton OnClick="@ToggleOpen" class="ml-2" Color="Color.Error">Close</MudButton>
+                </div>
+            </div>
+        </EditForm>
+    </MudPopover>
+</div>
 
 @if(products != null)
 { 
         <div class="container">
             <h1>Product List</h1>
             <MudTable Items="@products" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+            <ToolBarContent>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Add Product</MudButton>
+            </ToolBarContent>
                     <HeaderContent>
                         <MudTh>Name</MudTh>
                         <MudTh>Short Description</MudTh>
@@ -46,9 +94,23 @@
 
 @code {
     private List<GetProductDTO> products { get; set; }
+    private List<LocationDTO> getLocations { get; set; }
+
+    public CreateProductDTO product = new CreateProductDTO();
+    private bool _open = false;
 
     protected override async Task OnInitializedAsync()
     {
         products = await ProductService.GetAllProducts();
+        getLocations = await LocationService.GetLocations();
     }
+
+    public async Task CreateProduct()
+    {
+        Console.WriteLine($"Stock Location Id: {product.StockLocationId}");
+        await ProductService.CreateProduct(product);
+        _open = false;
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+    private async Task ToggleOpen() => _open = !_open;
 }

@@ -2,18 +2,45 @@
 @using BlazorEcommerce.Shared
 @using System.Net.Http.Json
 @inject HttpClient httpClient
-@inject ILocationService LocationService
+@inject ILocationService locationService
+@inject NavigationManager navigation
+
+<div class="container">
+    <MudPopover Open="@_open" Fixed="true">
+        <EditForm Model="@location" class="pop_up" style="padding: 20px;">
+            <div class="d-flex flex-column align-items-center">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Name">Name</label>
+                    <InputText id="Name" @bind-Value="@location.Name" class="form-control"></InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Address">Address</label>
+                    <InputText id="Address" @bind-Value="@location.Address" class="form-control"></InputText>
+                </div>
+                <div class="form-group">
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateLocation">Create</MudButton>
+                    <MudButton OnClick="@ToggleOpen" class="ml-2" Color="Color.Error">Close</MudButton>
+                </div>
+            </div>
+        </EditForm>
+    </MudPopover>
+</div>
 
 @if (locations != null)
 {
     <div class="container">
         <h1>Location List</h1>
         <MudTable Items="@locations" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+            <ToolBarContent>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Add Location</MudButton>
+            </ToolBarContent>
             <HeaderContent>
+                <MudTh>Id</MudTh>
                 <MudTh>Name</MudTh>
                 <MudTh>Address</MudTh>
             </HeaderContent>
             <RowTemplate>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd DataLabel="Address">@context.Address</MudTd>
             </RowTemplate>
@@ -36,10 +63,21 @@
 }
 
 @code {
-    private List<GetLocationDTO> locations { get; set; }
+    private List<LocationDTO> locations { get; set; }
+    public LocationManagementDTO location = new LocationManagementDTO();
+    private bool _open = false;
 
     protected override async Task OnInitializedAsync()
     {
-        locations = await LocationService.GetLocations();
+        locations = await locationService.GetLocations();
     }
+
+    public void CreateLocation()
+    {
+        locationService.CreateLocation(location);
+        _open = false;
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+
+    private void ToggleOpen() => _open = !_open;
 }
