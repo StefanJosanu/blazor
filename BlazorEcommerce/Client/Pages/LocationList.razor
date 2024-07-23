@@ -5,46 +5,69 @@
 @inject ILocationService locationService
 @inject NavigationManager navigation
 
-<div class="container">
-    <MudPopover Open="@_open" Fixed="true">
-        <EditForm Model="@location" class="pop_up" style="padding: 20px;">
-            <div class="d-flex flex-column align-items-center">
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label for="Name">Name</label>
-                    <InputText id="Name" @bind-Value="@location.Name" class="form-control"></InputText>
+<div class="table_container">
+    <div class="pop_container">
+        <MudPopover Open="@_open" Fixed="true">
+            <EditForm Model="@location" class="pop_up" style="padding: 20px;">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label for="Name">Name</label>
+                        <InputText id="Name" @bind-Value="@location.Name" class="form-control"></InputText>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label for="Address">Address</label>
+                        <InputText id="Address" @bind-Value="@location.Address" class="form-control"></InputText>
+                    </div>
+                    <div class="form-group">
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateLocation">Create</MudButton>
+                        <MudButton OnClick="@ToggleOpen" class="ml-2" Color="Color.Error">Close</MudButton>
+                    </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label for="Address">Address</label>
-                    <InputText id="Address" @bind-Value="@location.Address" class="form-control"></InputText>
-                </div>
-                <div class="form-group">
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateLocation">Create</MudButton>
-                    <MudButton OnClick="@ToggleOpen" class="ml-2" Color="Color.Error">Close</MudButton>
-                </div>
+            </EditForm>
+        </MudPopover>
+    </div>
+</div>
+
+<div class="table_container">
+        <MudPopover Open="@isDeleteOpen" Fixed="true" Class="px-4 pt-4 d-flex justify-content-end">
+            <MudText>Esti sigur ca doresti sa stergi produsul?</MudText>
+            <br />
+            <div class="d-flex flex-end">
+                <button type="submit" class="btn btn-danger">Da</button>
+                &nbsp;
+                <button type="submit" class="btn btn-danger" onclick="@ToggleDelete">Nu</button>
             </div>
-        </EditForm>
-    </MudPopover>
+        </MudPopover>
 </div>
 
 @if (locations != null)
 {
-    <div class="container">
-        <h1>Location List</h1>
-        <MudTable Items="@locations" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
-            <ToolBarContent>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Add Location</MudButton>
-            </ToolBarContent>
-            <HeaderContent>
-                <MudTh>Id</MudTh>
-                <MudTh>Name</MudTh>
-                <MudTh>Address</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Name">@context.Name</MudTd>
-                <MudTd DataLabel="Address">@context.Address</MudTd>
-            </RowTemplate>
-        </MudTable>
+    <div class="table_container">
+        <div class="container">
+            <h1>Location List</h1>
+            <MudTable Items="@locations" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
+                <ToolBarContent>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Add Location</MudButton>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Name</MudTh>
+                    <MudTh>Address</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Name">@context.Name</MudTd>
+                    <MudTd DataLabel="Address">@context.Address</MudTd>
+                    <MudTd style="width: 10vw;">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">
+                            <MudIcon Icon="@Icons.Material.Filled.Edit" Title="Edit" />
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleDelete">
+                            <MudIcon Icon="@Icons.Material.Filled.Delete" Title="Delete" />
+                        </MudButton>
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </div>
     </div>
 }
 
@@ -66,7 +89,7 @@
     private List<LocationDTO> locations { get; set; }
     public LocationManagementDTO location = new LocationManagementDTO();
     private bool _open = false;
-
+    private bool isDeleteOpen = false;
     protected override async Task OnInitializedAsync()
     {
         locations = await locationService.GetLocations();
@@ -80,4 +103,5 @@
     }
 
     private void ToggleOpen() => _open = !_open;
+    private void ToggleDelete() => isDeleteOpen = !isDeleteOpen;
 }
