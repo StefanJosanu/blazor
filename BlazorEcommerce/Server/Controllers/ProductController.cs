@@ -39,7 +39,7 @@ public class ProductController : ControllerBase
         return await _mediator.Send(new UpdateProductCommand(id, productDTO) { Id = id });
     }
 
-    [HttpDelete("delete-product")]
+    [HttpDelete("delete-product/{id}")]
     public async Task<Unit> DeleteProduct(Guid id)
     {
         return await _mediator.Send( new RemoveProductCommand(id) { Id = id} );

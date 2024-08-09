@@ -17,9 +17,26 @@ namespace BlazorEcommerce.Client.Services.ProductService
             await _http.PostAsJsonAsync("api/product/create-product", product);
         }
 
+        public async Task DeleteProduct(Guid id)
+        {
+            await _http.DeleteAsync($"api/product/delete-product/{id}");
+        }
+
         public async Task<List<GetProductDTO>> GetAllProducts()
         {
-            return await _http.GetFromJsonAsync<List<GetProductDTO>>("api/product/get-products");
+            var response = await _http.GetFromJsonAsync<List<GetProductDTO>>("api/product/get-products");
+            
+            return response;
+        }
+
+        public Task<GetProductDTO> GetProductId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateProduct(Guid id, ProductDTO p)
+        {
+            await _http.PutAsJsonAsync($"api/product/update-product/{id}", p);
         }
     }
 }

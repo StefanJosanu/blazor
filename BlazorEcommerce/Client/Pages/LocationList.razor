@@ -4,42 +4,13 @@
 @inject HttpClient httpClient
 @inject ILocationService locationService
 @inject NavigationManager navigation
+@inject IDialogService DialogService
 
 <div class="table_container">
-    <div class="pop_container">
-        <MudPopover Open="@_open" Fixed="true">
-            <EditForm Model="@location" class="pop_up" style="padding: 20px;">
-                <div class="d-flex flex-column align-items-center">
-                    <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="Name">Name</label>
-                        <InputText id="Name" @bind-Value="@location.Name" class="form-control"></InputText>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="Address">Address</label>
-                        <InputText id="Address" @bind-Value="@location.Address" class="form-control"></InputText>
-                    </div>
-                    <div class="form-group">
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateLocation">Create</MudButton>
-                        <MudButton OnClick="@ToggleOpen" class="ml-2" Color="Color.Error">Close</MudButton>
-                    </div>
-                </div>
-            </EditForm>
-        </MudPopover>
-    </div>
-</div>
+    <MudPopover Open="@isOpen" OverflowBehavior="OverflowBehavior.FlipAlways" Paper="true" Fixed="true">
 
-<div class="table_container">
-        <MudPopover Open="@isDeleteOpen" Fixed="true" Class="px-4 pt-4 d-flex justify-content-end">
-            <MudText>Esti sigur ca doresti sa stergi produsul?</MudText>
-            <br />
-            <div class="d-flex flex-end">
-                <button type="submit" class="btn btn-danger">Da</button>
-                &nbsp;
-                <button type="submit" class="btn btn-danger" onclick="@ToggleDelete">Nu</button>
-            </div>
-        </MudPopover>
+    </MudPopover>
 </div>
-
 @if (locations != null)
 {
     <div class="table_container">
@@ -47,7 +18,7 @@
             <h1>Location List</h1>
             <MudTable Items="@locations" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
                 <ToolBarContent>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Add Location</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OpenCreateDialogAsync">Add Location</MudButton>
                 </ToolBarContent>
                 <HeaderContent>
                     <MudTh>Name</MudTh>
@@ -58,11 +29,8 @@
                     <MudTd DataLabel="Name">@context.Name</MudTd>
                     <MudTd DataLabel="Address">@context.Address</MudTd>
                     <MudTd style="width: 10vw;">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditPopUp(context.Id)">
                             <MudIcon Icon="@Icons.Material.Filled.Edit" Title="Edit" />
-                        </MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleDelete">
-                            <MudIcon Icon="@Icons.Material.Filled.Delete" Title="Delete" />
                         </MudButton>
                     </MudTd>
                 </RowTemplate>
@@ -87,21 +55,30 @@
 
 @code {
     private List<LocationDTO> locations { get; set; }
-    public LocationManagementDTO location = new LocationManagementDTO();
-    private bool _open = false;
-    private bool isDeleteOpen = false;
+    private LocationManagementDTO location = new LocationManagementDTO();
+    private bool isOpen = false;
+    private Guid? SelectedId { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         locations = await locationService.GetLocations();
     }
-
-    public void CreateLocation()
+    private Task OpenCreateDialogAsync()
     {
-        locationService.CreateLocation(location);
-        _open = false;
-        navigation.NavigateTo(navigation.Uri, true);
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        return DialogService.ShowAsync<Shared.CreateLocationDialog>("Create Location", options);
+    }
+    private void ToggleOpen() => isOpen = !isOpen;
+    private async Task OpenEditPopUp(Guid? id)
+    {
+        SelectedId = id;
+        isOpen = true;
     }
 
-    private void ToggleOpen() => _open = !_open;
-    private void ToggleDelete() => isDeleteOpen = !isDeleteOpen;
+    private async Task EditLocation(LocationManagementDTO locationToUpdate)
+    {
+        location = locationToUpdate;
+        locationService.UpdateLocation(locationToUpdate);
+    }
 }

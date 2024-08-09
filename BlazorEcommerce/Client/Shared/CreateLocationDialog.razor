@@ -1,0 +1,53 @@
+﻿@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IProductService ProductService
+@inject ILocationService LocationService
+@inject NavigationManager navigation
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@location" class="pop_up" style="padding: 20px;">
+            <div class="d-flex flex-column align-items-center">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Name">Name</label>
+                    <InputText id="Name" @bind-Value="@location.Name" class="form-control"></InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Address">Address</label>
+                    <InputText id="Address" @bind-Value="@location.Address" class="form-control"></InputText>
+                </div>
+                <div class="form-group">
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateLocation">Create</MudButton>
+                    <MudButton OnClick="Cancel" class="ml-2" Color="Color.Error">Close</MudButton>
+                </div>
+            </div>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private List<LocationDTO>? locations { get; set; }
+    public LocationManagementDTO location = new LocationManagementDTO();
+    private bool _open = false;
+    protected override async Task OnInitializedAsync()
+    {
+        locations = await LocationService.GetLocations();
+    }
+
+    [CascadingParameter]
+    private MudDialogInstance? MudDialog { get; set; }
+
+    private void Submit() => MudDialog?.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog?.Cancel();
+
+    public async Task CreateLocation()
+    {
+        await LocationService.CreateLocation(location);
+        _open = false;
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+    private void ToggleOpen() => _open = !_open;
+}

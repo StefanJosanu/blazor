@@ -1,0 +1,53 @@
+﻿@using System.Net.Http.Json
+@using BlazorEcommerce.Client.Shared
+@inject HttpClient httpClient
+@inject IProductService ProductService
+@inject ILocationService LocationService
+@inject NavigationManager navigation
+
+<MudDialog>
+    <DialogContent>
+                <div class="d-flex flex-column">
+                    <MudText>Sigur doresti sa stergi produsul @SelectedName?</MudText>
+                </div>
+                <br />
+    </DialogContent>
+    <DialogActions>
+        <div class="buttons">
+            <MudButton OnClick="@ToggleDelete" Color="Color.Inherit">Nu</MudButton>
+            <MudButton OnClick="@DeleteProduct" Color="Color.Error">Da</MudButton>
+        </div>
+    </DialogActions>
+</MudDialog>
+@code {
+    private List<GetProductDTO> getProducts { get; set; }
+    private bool isDeleteOpen = false;
+
+    [Parameter]
+    public Guid? SelectedId { get; set; }
+    [Parameter]
+    public string? SelectedName { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        getProducts = await ProductService.GetAllProducts();
+    }
+    
+    
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    public async Task DeleteProduct()
+    {
+        if (SelectedId != null || SelectedId != Guid.Empty)
+            await ProductService.DeleteProduct(SelectedId.Value);
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+
+    private async Task ToggleDelete() => isDeleteOpen = !isDeleteOpen;
+}

@@ -1,0 +1,42 @@
+﻿@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IProductService ProductService
+@inject ILocationService LocationService
+@inject NavigationManager navigation
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@product">
+            
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private ProductDTO product { get; set; }
+    private List<GetProductDTO> getProducts { get; set; } = new List<GetProductDTO>();
+    private List<LocationDTO> getLocations { get; set; }
+    private Guid? SelectedId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        getProducts = await ProductService.GetAllProducts();
+    }
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    public async Task UpdateProduct()
+    {
+        await ProductService.UpdateProduct(SelectedId.Value , product);
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+}

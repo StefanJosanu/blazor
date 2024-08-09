@@ -1,54 +1,11 @@
 ﻿@page "/products"
 @using System.Net.Http.Json
+@using BlazorEcommerce.Client.Shared
 @inject HttpClient httpClient
 @inject IProductService ProductService
 @inject ILocationService LocationService
 @inject NavigationManager navigation
-
-<div class="table_container">
-    <div class="pop_container">
-        <MudPopover Open="@_open" Fixed="true">
-            <EditForm Model="@product" class="pop_up" style="padding: 20px;">
-                <div class="d-flex flex-column align-items-center">
-                    <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="Name">Name</label>
-                        <InputText id="Name" @bind-Value="@product.Name" class="form-control"></InputText>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="ShortDescription">Short Description</label>
-                        <InputText id="ShortDescription" @bind-Value="@product.ShortDescription" class="form-control"></InputText>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="Description">Short Description</label>
-                        <InputText id="Description" @bind-Value="@product.Description" class="form-control"></InputText>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="Price">Price</label>
-                        <InputNumber id="Price" @bind-Value="@product.Price" class="form-control"></InputNumber>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 15px;">
-                        <label for="StockQuantity">Stock Quantity</label>
-                        <InputNumber id="StockQuantity" @bind-Value="@product.StockQuantity" class="form-control"></InputNumber>
-                    </div>
-                    <div class="form-group">
-                        <MudSelect T="Guid?" @bind-Value="@product.StockLocationId" Label="Select Location" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
-                            @foreach (var location in getLocations)
-                            {
-                                <MudSelectItem Value="@location.Id">@location.Name</MudSelectItem>
-                            }
-                        </MudSelect>
-                    </div>
-                    <br />
-                    <br />
-                    <div class="form-group">
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateProduct">Create</MudButton>
-                        <MudButton OnClick="@ToggleOpen" class="ml-2" Color="Color.Error">Close</MudButton>
-                    </div>
-                </div>
-            </EditForm>
-        </MudPopover>
-    </div>
-</div>
+@inject IDialogService DialogService
 
 @if(products != null)
 { 
@@ -57,7 +14,7 @@
             <h1>Product List</h1>
             <MudTable Items="@products" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info">
                 <ToolBarContent>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Add Product</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OpenCreateDialogAsync">Add Product</MudButton>
                 </ToolBarContent>
                 <HeaderContent>
                     <MudTh>Name</MudTh>
@@ -78,16 +35,27 @@
                     <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
                     <MudTd style="width: 12vw;" DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
                     <MudTd style="width: 10vw;">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">
-                            <MudIcon Icon="@Icons.Material.Filled.Edit" Title="Edit" />
-                        </MudButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">
-                            <MudIcon Icon="@Icons.Material.Filled.Delete" Title="Delete" />
+
+                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="()=>OpenDeletePopUp(context.Id, context.Name)">
+                            <MudIcon Icon="@Icons.Material.Filled.Delete" Color="Color.Inherit" Title="Delete" />
                         </MudButton>
                     </MudTd>
                 </RowTemplate>
             </MudTable>
         </div>
+        </div>
+
+        <div class="table_container">
+            <MudPopover Open="@isDeleteOpen" OverflowBehavior="OverflowBehavior.FlipAlways" Paper="true" Fixed="true">
+                <div class="d-flex flex-column">
+                    <MudText>Sigur doresti sa stergi produsul @SelectedName?</MudText>
+                </div>
+                <br />
+                <div class="buttons">
+                    <MudButton OnClick="@ToggleDelete" Color="Color.Inherit">Nu</MudButton>
+                    <MudButton OnClick="@DeleteProduct" Color="Color.Error">Da</MudButton>
+                </div>
+            </MudPopover>
         </div>
 }
 
@@ -107,23 +75,47 @@
 
 @code {
     private List<GetProductDTO> products { get; set; }
-    private List<LocationDTO> getLocations { get; set; }
-
     public CreateProductDTO product = new CreateProductDTO();
-    private bool _open = false;
 
+
+    public Guid? SelectedId { get; set; }
+    public string? SelectedName { get; set; }
+    private bool isDeleteOpen = false;
+    private bool isEditOpen = false;
     protected override async Task OnInitializedAsync()
     {
         products = await ProductService.GetAllProducts();
-        getLocations = await LocationService.GetLocations();
     }
-
-    public async Task CreateProduct()
+    private Task OpenCreateDialogAsync()
     {
-        Console.WriteLine($"Stock Location Id: {product.StockLocationId}");
-        await ProductService.CreateProduct(product);
-        _open = false;
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        return DialogService.ShowAsync<Shared.CreateDialog>("Create Product", options);
+    }
+    public async Task OpenDeletePopUp(Guid id, string name)
+    {
+        SelectedId = id;
+        SelectedName = name;
+        isDeleteOpen = true;
+    }
+    public async Task DeleteProduct()
+    {
+        if (SelectedId != null || SelectedId != Guid.Empty)
+            await ProductService.DeleteProduct(SelectedId.Value);
         navigation.NavigateTo(navigation.Uri, true);
     }
-    private async Task ToggleOpen() => _open = !_open;
+    @* private Task OpenDialogAsync(Guid id, string name)
+    {
+
+        var parameters = new DialogParameters<Shared.DeleteProductDialog>
+        {
+            { x => x.SelectedId, SelectedId },
+            { x => x.SelectedName, SelectedName }
+        };
+
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        return DialogService.ShowAsync<Shared.DeleteProductDialog>("Delete Dialog", parameters, options);
+    } *@
+    private async Task ToggleDelete() => isDeleteOpen = !isDeleteOpen;
 }

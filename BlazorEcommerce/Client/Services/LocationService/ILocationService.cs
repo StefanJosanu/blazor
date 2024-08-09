@@ -6,5 +6,6 @@ namespace BlazorEcommerce.Client.Services.LocationService
     {
         Task<List<LocationDTO>> GetLocations();
         Task CreateLocation(LocationManagementDTO locationToAdd);
+        Task UpdateLocation(LocationManagementDTO locationToUpdate);
     }
 }

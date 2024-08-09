@@ -22,5 +22,10 @@ namespace BlazorEcommerce.Client.Services.LocationService
         {
             return await _http.GetFromJsonAsync<List<LocationDTO>>("api/location/get-locations");
         }
+
+        public async Task UpdateLocation(LocationManagementDTO locationToUpdate)
+        {
+            await _http.PutAsJsonAsync("api/location/update-location", locationToUpdate);
+        }
     }
 }
