@@ -34,7 +34,7 @@ namespace BlazorEcommerce.Client.Services.ProductService
             throw new NotImplementedException();
         }
 
-        public async Task UpdateProduct(Guid id, ProductDTO p)
+        public async Task UpdateProduct(Guid id, CreateProductDTO p)
         {
             await _http.PutAsJsonAsync($"api/product/update-product/{id}", p);
         }

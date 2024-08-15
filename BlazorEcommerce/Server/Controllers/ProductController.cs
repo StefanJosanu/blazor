@@ -24,7 +24,7 @@ public class ProductController : ControllerBase
     [HttpGet("get-id-product")]
     public async Task<Product> GetProductById(Guid id)
     {
-        return await _mediator.Send(new GetProductByIdQuerry(id) { Id = id });
+        return await _mediator.Send(new GetProductByIdQuerry(id) { Id = new Guid() });
     }
 
     [HttpPost("create-product")]
@@ -33,15 +33,15 @@ public class ProductController : ControllerBase
         return await _mediator.Send(new CreateProductCommand(createProductDTO));
     }
 
-    [HttpPut("update-product")]
-    public async Task<ProductDTO> UpdateProduct (Guid id, [FromBody] ProductDTO productDTO)
+    [HttpPut("update-product/{id}")]
+    public async Task<ProductDTO> UpdateProduct (Guid id, [FromBody] ProductDTO productDTOs)
     {
-        return await _mediator.Send(new UpdateProductCommand(id, productDTO) { Id = id });
+        return await _mediator.Send(new UpdateProductCommand() { Id = id, productDTO = productDTOs});
     }
 
     [HttpDelete("delete-product/{id}")]
     public async Task<Unit> DeleteProduct(Guid id)
     {
-        return await _mediator.Send( new RemoveProductCommand(id) { Id = id} );
+        return await _mediator.Send( new RemoveProductCommand(id));
     }
 }

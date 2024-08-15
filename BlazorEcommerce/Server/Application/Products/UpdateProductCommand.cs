@@ -7,12 +7,6 @@ public class UpdateProductCommand : IRequest<ProductDTO>
 {
     public Guid Id { get; set; }
     public ProductDTO productDTO { get; set; }
-
-    public UpdateProductCommand(Guid id, ProductDTO ProductDTO)
-    {
-        Id = id;
-        productDTO = ProductDTO;
-    }
 }
 
 public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ProductDTO>

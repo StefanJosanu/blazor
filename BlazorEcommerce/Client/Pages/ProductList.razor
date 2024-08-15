@@ -37,7 +37,7 @@
                     <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
                     <MudTd style="width: 12vw;" DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
                     <MudTd style="width: 10vw;">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditDialogAsync(context.Id, context.Name, context.ShortDescription, context.Description, context.Price, context.StockQuantity, context.StockLocationName)">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditDialogAsync(context)">
                             <MudIcon Icon="@Icons.Material.Filled.Edit" Color="Color.Inherit" Title="Delete" />
                         </MudButton>
                         <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => OpenDeleteDialog(context.Id, context.Name)">
@@ -67,7 +67,6 @@
 
 @code {
     private List<GetProductDTO> products { get; set; }
-    public CreateProductDTO product = new CreateProductDTO();
 
     private Task OpenDeleteDialog(Guid? id, string name)
     {
@@ -91,19 +90,23 @@
 
         return DialogService.ShowAsync<Shared.CreateDialog>("Create Product", options);
     }
-    private Task OpenEditDialogAsync(Guid? id, string name, string shortDescription, string description, decimal price, int quantity, string stockLocatioName)
+    private Task OpenEditDialogAsync(GetProductDTO product)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
         var parameters = new DialogParameters<Shared.EditProductDialog>
         {
-            {x => x.SelectedId, id},
-            {x => x.SelectedName, name},
-            {x=> x.SelectedShortDescription, shortDescription},
-            {x=> x.SelectedDescription, description},
-            {x=> x.SelectedPrice, price},
-            {x=> x.SelectedQuantity, quantity},
-            {x=> x.SelectedStockLocationName, stockLocatioName}
+            { x=> x.EditProduct, new CreateProductDTO
+                {
+                   Id = product.Id,      
+                   Name = product.Name,     
+                   StockLocationId = product.StockLocationId,     
+                   Description = product.Description,
+                   Price = product.Price,  
+                   StockQuantity = product.StockQuantity,
+                    ShortDescription= product.ShortDescription
+                }
+            }
         };
 
         return DialogService.ShowAsync<Shared.EditProductDialog>("Edit Dialog", parameters, options);

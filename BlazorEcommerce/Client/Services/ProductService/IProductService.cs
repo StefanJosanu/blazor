@@ -8,6 +8,6 @@ namespace BlazorEcommerce.Client.Services.ProductService
         Task<GetProductDTO> GetProductId(Guid id);
         Task CreateProduct(CreateProductDTO product);
         Task DeleteProduct(Guid id);
-        Task UpdateProduct(Guid id, ProductDTO product);
+        Task UpdateProduct(Guid id, CreateProductDTO product);
     }
 }
