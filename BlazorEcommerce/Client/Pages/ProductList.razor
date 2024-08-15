@@ -7,6 +7,8 @@
 @inject NavigationManager navigation
 @inject IDialogService DialogService
 
+
+
 @if(products != null)
 { 
         <div class="table_container">
@@ -35,9 +37,11 @@
                     <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
                     <MudTd style="width: 12vw;" DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
                     <MudTd style="width: 10vw;">
-
-                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="()=>OpenDeletePopUp(context.Id, context.Name)">
-                            <MudIcon Icon="@Icons.Material.Filled.Delete" Color="Color.Inherit" Title="Delete" />
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditDialogAsync(context.Id, context.Name, context.ShortDescription, context.Description, context.Price, context.StockQuantity, context.StockLocationName)">
+                            <MudIcon Icon="@Icons.Material.Filled.Edit" Color="Color.Inherit" Title="Delete" />
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => OpenDeleteDialog(context.Id, context.Name)">
+                            <MudIcon Icon="@Icons.Material.Filled.Delete" Color="Color.Inherit" Title="Delete"/>
                         </MudButton>
                     </MudTd>
                 </RowTemplate>
@@ -45,18 +49,6 @@
         </div>
         </div>
 
-        <div class="table_container">
-            <MudPopover Open="@isDeleteOpen" OverflowBehavior="OverflowBehavior.FlipAlways" Paper="true" Fixed="true">
-                <div class="d-flex flex-column">
-                    <MudText>Sigur doresti sa stergi produsul @SelectedName?</MudText>
-                </div>
-                <br />
-                <div class="buttons">
-                    <MudButton OnClick="@ToggleDelete" Color="Color.Inherit">Nu</MudButton>
-                    <MudButton OnClick="@DeleteProduct" Color="Color.Error">Da</MudButton>
-                </div>
-            </MudPopover>
-        </div>
 }
 
 @if (products == null)
@@ -77,45 +69,43 @@
     private List<GetProductDTO> products { get; set; }
     public CreateProductDTO product = new CreateProductDTO();
 
+    private Task OpenDeleteDialog(Guid? id, string name)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<Shared.DeleteProductDialog>
+        {
+            {x => x.SelectedId, id},
+            {x=> x.SelectedName, name}
+        };
+        return DialogService.ShowAsync<Shared.DeleteProductDialog>("", parameters, options);
+    }
 
-    public Guid? SelectedId { get; set; }
-    public string? SelectedName { get; set; }
-    private bool isDeleteOpen = false;
-    private bool isEditOpen = false;
     protected override async Task OnInitializedAsync()
     {
         products = await ProductService.GetAllProducts();
     }
     private Task OpenCreateDialogAsync()
+
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
         return DialogService.ShowAsync<Shared.CreateDialog>("Create Product", options);
     }
-    public async Task OpenDeletePopUp(Guid id, string name)
+    private Task OpenEditDialogAsync(Guid? id, string name, string shortDescription, string description, decimal price, int quantity, string stockLocatioName)
     {
-        SelectedId = id;
-        SelectedName = name;
-        isDeleteOpen = true;
-    }
-    public async Task DeleteProduct()
-    {
-        if (SelectedId != null || SelectedId != Guid.Empty)
-            await ProductService.DeleteProduct(SelectedId.Value);
-        navigation.NavigateTo(navigation.Uri, true);
-    }
-    @* private Task OpenDialogAsync(Guid id, string name)
-    {
-
-        var parameters = new DialogParameters<Shared.DeleteProductDialog>
-        {
-            { x => x.SelectedId, SelectedId },
-            { x => x.SelectedName, SelectedName }
-        };
-
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
-        return DialogService.ShowAsync<Shared.DeleteProductDialog>("Delete Dialog", parameters, options);
-    } *@
-    private async Task ToggleDelete() => isDeleteOpen = !isDeleteOpen;
+        var parameters = new DialogParameters<Shared.EditProductDialog>
+        {
+            {x => x.SelectedId, id},
+            {x => x.SelectedName, name},
+            {x=> x.SelectedShortDescription, shortDescription},
+            {x=> x.SelectedDescription, description},
+            {x=> x.SelectedPrice, price},
+            {x=> x.SelectedQuantity, quantity},
+            {x=> x.SelectedStockLocationName, stockLocatioName}
+        };
+
+        return DialogService.ShowAsync<Shared.EditProductDialog>("Edit Dialog", parameters, options);
+    }
 }

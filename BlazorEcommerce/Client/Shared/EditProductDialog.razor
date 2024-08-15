@@ -1,0 +1,88 @@
+﻿@inject IProductService ProductService
+@inject ILocationService LocationService
+@inject NavigationManager navigation
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@EditProduct" style="padding: 20px;">
+            <div class="d-flex flex-column align-items-center">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Name">Name</label>
+                    <InputText id="Name" @bind-Value="@EditProduct.Name" class="form-control">@SelectedName</InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="ShortDescription">Short Description</label>
+                    <InputText id="ShortDescription" @bind-Value="@EditProduct.ShortDescription" class="form-control">@SelectedShortDescription</InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Description">Short Description</label>
+                    <InputText id="Description" @bind-Value="@EditProduct.Description" class="form-control">@SelectedDescription</InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Price">Price</label>
+                    <InputNumber id="Price" @bind-Value="@EditProduct.Price" class="form-control">@SelectedPrice</InputNumber>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="StockQuantity">Stock Quantity</label>
+                    <InputNumber id="StockQuantity" @bind-Value="@EditProduct.StockQuantity" class="form-control">@SelectedQuantity</InputNumber>
+                </div>
+                <div class="form-group">
+                    <MudSelect T="Guid?" @bind-Value="@EditProduct.StockLocationId" Label="Select Location" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+                        @if (getLocations != null)
+                        {
+                            @foreach (var location in getLocations)
+                            {
+                                <MudSelectItem Value="@location.Id">@location.Name</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+                </div>
+                <br />
+                <br />
+            </div>
+        </EditForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="UpdateProduct">Update</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [Parameter]
+    public Guid? SelectedId { get; set; }
+    [Parameter]
+    public string SelectedName { get; set; }
+    [Parameter]
+    public string SelectedShortDescription { get; set; }
+    [Parameter]
+    public string SelectedDescription { get; set; }
+    [Parameter]
+    public decimal SelectedPrice { get; set; }
+    [Parameter]
+    public int SelectedQuantity { get; set; }
+    [Parameter]
+    public string SelectedStockLocationName { get; set; }
+
+    private List<GetProductDTO> products { get; set; }
+    private List<LocationDTO> getLocations { get; set; }
+    public ProductDTO EditProduct = new ProductDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetAllProducts();
+        getLocations = await LocationService.GetLocations();
+    }
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task UpdateProduct()
+    {
+        await ProductService.UpdateProduct(SelectedId.Value, EditProduct);
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+}
