@@ -6,11 +6,6 @@
 @inject NavigationManager navigation
 @inject IDialogService DialogService
 
-<div class="table_container">
-    <MudPopover Open="@isOpen" OverflowBehavior="OverflowBehavior.FlipAlways" Paper="true" Fixed="true">
-
-    </MudPopover>
-</div>
 @if (locations != null)
 {
     <div class="table_container">
@@ -29,8 +24,11 @@
                     <MudTd DataLabel="Name">@context.Name</MudTd>
                     <MudTd DataLabel="Address">@context.Address</MudTd>
                     <MudTd style="width: 10vw;">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditPopUp(context.Id)">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditDialogAsync(context)">
                             <MudIcon Icon="@Icons.Material.Filled.Edit" Title="Edit" />
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => OpenDeleteDialog(context.Id, context.Name)">
+                            <MudIcon Icon="@Icons.Material.Filled.Delete" Color="Color.Inherit" Title="Delete" />
                         </MudButton>
                     </MudTd>
                 </RowTemplate>
@@ -54,10 +52,7 @@
 }
 
 @code {
-    private List<LocationDTO> locations { get; set; }
-    private LocationManagementDTO location = new LocationManagementDTO();
-    private bool isOpen = false;
-    private Guid? SelectedId { get; set; }
+    private List<LocationManagementDTO> locations { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,18 +62,32 @@
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
-        return DialogService.ShowAsync<Shared.CreateLocationDialog>("Create Location", options);
-    }
-    private void ToggleOpen() => isOpen = !isOpen;
-    private async Task OpenEditPopUp(Guid? id)
-    {
-        SelectedId = id;
-        isOpen = true;
+        return DialogService.ShowAsync<Components.CreateLocationDialog>("Create Location", options);
     }
 
-    private async Task EditLocation(LocationManagementDTO locationToUpdate)
+    private Task OpenEditDialogAsync(LocationManagementDTO location)
     {
-        location = locationToUpdate;
-        locationService.UpdateLocation(locationToUpdate);
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<Components.EditLocationDialog>
+            {
+                {x=>x.EditLocation, new LocationManagementDTO
+                {
+                    Id = location.Id,
+                    Name = location.Name,
+                    Address = location.Address
+                }
+                }
+            };
+        return DialogService.ShowAsync<Components.EditLocationDialog>("Edit Location", parameters, options);
+    }
+    private Task OpenDeleteDialog(Guid? id, string name)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var parameters = new DialogParameters<Components.DeleteLocationDialog>
+        {
+            {x => x.SelectedId, id},
+            {x=> x.SelectedName, name}
+        };
+        return DialogService.ShowAsync<Components.DeleteLocationDialog>("", parameters, options);
     }
 }

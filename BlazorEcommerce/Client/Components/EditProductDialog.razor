@@ -44,12 +44,14 @@
         }
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="UpdateProduct">Update</MudButton>
+        <div class="form-group">
+            <MudButton OnClick="Cancel" class="ml-2" Color="Color.Error">Close</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="UpdateProduct">Update</MudButton>
+        </div>
     </DialogActions>
 </MudDialog>
 @code {
-    private List<LocationDTO> getLocations { get; set; }
+    private List<LocationManagementDTO> getLocations { get; set; }
     [Parameter]
     public CreateProductDTO EditProduct { get; set; }
 
@@ -68,6 +70,6 @@
     private async Task UpdateProduct()
     {
         await ProductService.UpdateProduct(EditProduct.Id.Value, EditProduct);
-      //  navigation.NavigateTo(navigation.Uri, true);
+        navigation.NavigateTo(navigation.Uri, true);
     }
 }

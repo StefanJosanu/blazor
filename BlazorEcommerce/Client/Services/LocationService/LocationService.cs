@@ -18,14 +18,19 @@ namespace BlazorEcommerce.Client.Services.LocationService
             await _http.PostAsJsonAsync("api/location/create-locations", locationToAdd);
         }
 
-        public async Task<List<LocationDTO>> GetLocations()
+        public async Task DeleteLocation(Guid? id)
         {
-            return await _http.GetFromJsonAsync<List<LocationDTO>>("api/location/get-locations");
+            await _http.DeleteAsync($"api/location/delete-location/{id}");
         }
 
-        public async Task UpdateLocation(LocationManagementDTO locationToUpdate)
+        public async Task<List<LocationManagementDTO>> GetLocations()
         {
-            await _http.PutAsJsonAsync("api/location/update-location", locationToUpdate);
+            return await _http.GetFromJsonAsync<List<LocationManagementDTO>>("api/location/get-locations");
+        }
+
+        public async Task UpdateLocation(Guid? id,LocationManagementDTO locationToUpdate)
+        {
+            await _http.PutAsJsonAsync($"api/location/update-location/{id}", locationToUpdate);
         }
     }
 }

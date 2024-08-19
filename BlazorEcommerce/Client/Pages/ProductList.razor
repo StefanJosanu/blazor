@@ -34,10 +34,18 @@
                     <MudTd DataLabel="Description">@context.Description</MudTd>
                     <MudTd DataLabel="Price">@context.Price</MudTd>
                     <MudTd DataLabel="Stock Quantity">@context.StockQuantity</MudTd>
-                    <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
-                    <MudTd style="width: 12vw;" DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
-                    <MudTd style="width: 10vw;">
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditDialogAsync(context)">
+                    @if(context.StockLocationName == null && context.StockLocationAddress == null)
+                    {
+                        <MudTd DataLabel="Stock Location Name" style="background-color: yellow">Nici o Locatie Adaugata</MudTd>
+                        <MudTd DataLabel="Stock Location Address" style="background-color: yellow; width: 12vw;">Nici o Locatie Adaugata</MudTd>
+                    }
+                    else
+                    {
+                        <MudTd DataLabel="Stock Location Name">@context.StockLocationName</MudTd>
+                        <MudTd style="width: 12vw;" DataLabel="Stock Location Address">@context.StockLocationAddress</MudTd>
+                    }
+                    <MudTd style="width: 10vw;">                        
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenEditDialogAsync(context)">
                             <MudIcon Icon="@Icons.Material.Filled.Edit" Color="Color.Inherit" Title="Delete" />
                         </MudButton>
                         <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => OpenDeleteDialog(context.Id, context.Name)">
@@ -71,12 +79,12 @@
     private Task OpenDeleteDialog(Guid? id, string name)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        var parameters = new DialogParameters<Shared.DeleteProductDialog>
+        var parameters = new DialogParameters<Components.DeleteProductDialog>
         {
             {x => x.SelectedId, id},
             {x=> x.SelectedName, name}
         };
-        return DialogService.ShowAsync<Shared.DeleteProductDialog>("", parameters, options);
+        return DialogService.ShowAsync<Components.DeleteProductDialog>("", parameters, options);
     }
 
     protected override async Task OnInitializedAsync()
@@ -88,13 +96,13 @@
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
-        return DialogService.ShowAsync<Shared.CreateDialog>("Create Product", options);
+        return DialogService.ShowAsync<Components.CreateDialog>("Create Product", options);
     }
     private Task OpenEditDialogAsync(GetProductDTO product)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
-        var parameters = new DialogParameters<Shared.EditProductDialog>
+        var parameters = new DialogParameters<Components.EditProductDialog>
         {
             { x=> x.EditProduct, new CreateProductDTO
                 {
@@ -104,11 +112,11 @@
                    Description = product.Description,
                    Price = product.Price,  
                    StockQuantity = product.StockQuantity,
-                    ShortDescription= product.ShortDescription
+                   ShortDescription= product.ShortDescription
                 }
             }
         };
 
-        return DialogService.ShowAsync<Shared.EditProductDialog>("Edit Dialog", parameters, options);
+        return DialogService.ShowAsync<Components.EditProductDialog>("Edit Dialog", parameters, options);
     }
 }
