@@ -96,7 +96,7 @@
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
 
-        return DialogService.ShowAsync<Components.CreateDialog>("Create Product", options);
+        return DialogService.ShowAsync<Components.CreateProductDialog>("Create Product", options);
     }
     private Task OpenEditDialogAsync(GetProductDTO product)
     {

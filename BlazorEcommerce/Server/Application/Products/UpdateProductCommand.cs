@@ -29,6 +29,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
             dbProduct.Description = request.productDTO.Description;
             dbProduct.StockQuantity = request.productDTO.StockQuantity;
             dbProduct.Price = request.productDTO.Price;
+            dbProduct.StockLocationId = request.productDTO.StockLocationId;
             await _dbContext.SaveChangesAsync();
         }
         else
