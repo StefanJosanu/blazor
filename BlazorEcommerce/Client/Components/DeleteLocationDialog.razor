@@ -1,0 +1,31 @@
+﻿@inject ILocationService LocationService
+@inject NavigationManager navigation
+<MudDialog>
+    <DialogContent>
+        <div class="d-flex flex-column">
+            <MudText>Daca vei sterge locatia @SelectedName, toate produsele de aici vor ramane fara locaie, vrei sa continui?</MudText>
+        </div>
+        <br />
+        <div class="buttons">
+            <MudButton OnClick="Cancel" Color="Color.Inherit">Nu</MudButton>
+            <MudButton OnClick="@DeleteProduct" Color="Color.Error">Da</MudButton>
+        </div>
+    </DialogContent>
+</MudDialog>
+@code {
+    [Parameter]
+    public string SelectedName { get; set; }
+    [Parameter]
+    public Guid? SelectedId { get; set; }
+
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    public async Task DeleteProduct()
+    {
+        if (SelectedId != null || SelectedId != Guid.Empty)
+            await LocationService.DeleteLocation(SelectedId.Value);
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+    private void Cancel() => MudDialog.Cancel();
+}

@@ -22,9 +22,13 @@ namespace BlazorEcommerce.Server.Application.Locations
         public async Task<Unit> Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
         {
             var locationToDelete = await _dbContext.Locations.Where(l => l.Id == request.Id).FirstOrDefaultAsync();
-
-            if (locationToDelete != null)
+            List<Product> productsToSetNull = await _dbContext.Products.Where(p => p.StockLocationId == request.Id).ToListAsync();
+            if (locationToDelete != null && productsToSetNull != null)
             {
+                foreach (var product in productsToSetNull)
+                {
+                    product.StockLocation = null;
+                }
                 _dbContext.Locations.Remove(locationToDelete);
                 await _dbContext.SaveChangesAsync();
             }
