@@ -1,0 +1,35 @@
+﻿@inject ILocationService LocationService
+@inject NavigationManager navigation
+        <EditForm Model="@EditLocation" class="pop_up" style="padding: 20px;">
+            <div class="d-flex flex-column align-items-center">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Name">Name</label>
+                    <InputText id="Name" @bind-Value="@EditLocation.Name" class="form-control"></InputText>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="Address">Address</label>
+                    <InputText id="Address" @bind-Value="@EditLocation.Address" class="form-control"></InputText>
+                </div>
+                <div class="form-group">
+                    <MudButton OnClick="Cancel" class="ml-2" Color="Color.Error">Close</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" OnClick="UpdateLocation">Update</MudButton>
+                </div>
+            </div>
+        </EditForm>
+
+@code {
+    [Parameter]
+    public LocationManagementDTO? EditLocation { get; set; }
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+
+    public async Task UpdateLocation()
+    {
+        await LocationService.UpdateLocation(EditLocation.Id.Value, EditLocation);
+        navigation.NavigateTo(navigation.Uri, true);
+    }
+}

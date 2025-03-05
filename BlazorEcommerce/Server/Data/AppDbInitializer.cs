@@ -1,4 +1,6 @@
 ﻿using BlazorEcommerce.Server;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Data.Entity;
 
 namespace WebServerSeeding.Data
 {
@@ -9,9 +11,8 @@ namespace WebServerSeeding.Data
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
-                // Create context and get the AppDbContext Service
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
-                // Verify that db is created, if not create automatically using ensure created
+
                 context.Database.EnsureCreated();
 
                 // add Locations if there are nothing in Database

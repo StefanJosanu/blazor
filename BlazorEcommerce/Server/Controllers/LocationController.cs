@@ -33,16 +33,15 @@ public class LocationController : ControllerBase
         return await _mediator.Send(new CreateLocationCommand(locationDTO));
     }
 
-    [HttpPut("update-location")]
+    [HttpPut("update-location/{id}")]
     public async Task<LocationManagementDTO> UpdateLocation(Guid id, [FromBody] LocationManagementDTO updateLocation)
     {
-        return await _mediator.Send(new UpdateLocationCommand(id, updateLocation) { Id = id });
+        return await _mediator.Send(new UpdateLocationCommand(id, updateLocation));
     }
-
-    [HttpDelete("delete-location")]
+    [HttpDelete("delete-location/{id}")]
     public async Task<Unit> DeleteLocation(Guid id)
     {
-        return await _mediator.Send(new DeleteLocationCommand(id) { Id = id });
+        return await _mediator.Send(new DeleteLocationCommand(id));
     }
 
 }
